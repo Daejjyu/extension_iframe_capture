@@ -1,5 +1,6 @@
 ## Iframe Capture Extension
 동영상 강의를 캡쳐하기 위해 만듬
+
 CORS 문제가 있어 DOM 접근이 아닌 chrome의 captureVisibleTab API를 통해서 제작함
 captureVisibleTab는 viewport 전체 화면 자체를 물리적(?)으로 캡쳐하는 듯 보임
 캡쳐 후 iframe의 Pos, Size를 계산하여 이미지를 잘라서 클립보드에 복사
