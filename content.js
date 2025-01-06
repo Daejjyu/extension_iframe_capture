@@ -1,5 +1,15 @@
 let isListenerAdded = false; // 리스너가 이미 등록되었는지 확인하는 플래그
 
+// 기본 영상 비율
+let videoAspectRatio = 1.8;
+
+// 저장된 영상 비율 값 가져오기
+chrome.storage.sync.get(['videoAspectRatio'], function(result) {
+  if (result.videoAspectRatio) {
+    videoAspectRatio = result.videoAspectRatio;
+  }
+});
+
 // chrome.runtime.onMessage.addListener는 한 번만 등록되도록 수정
 if (!isListenerAdded) {
   chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -89,19 +99,20 @@ window.addEventListener("message", function(event) {
           // console.log(`조정된 iframe 크기 및 비율: ${adjustedWidth}x${adjustedHeight}, ${adjustedWidth/adjustedHeight}`);
           // console.log(`조정된 iframe 위치: ${adjustedLeft}, ${adjustedTop}`);
 
-          // 캔버스 크기 설정 (스크린샷 이미지 크기에 맞게 캔버스를 설정)
-          canvas.width = adjustedWidth;
-          canvas.height = adjustedHeight;
-
-          const videoAspectRatio = 1.8; // 영상의 고정된 비율
           const aspectWidth = videoAspectRatio * adjustedHeight;
           // 너무 크면 양 옆 자르기
           // console.log(adjustedWidth, adjustedHeight, videoAspectRatio, aspectWidth)
-          if (adjustedWidth / aspectWidth > 1.2) { 
-            adjustedWidth = aspectWidth;
+          const arbitraryThreshold = 1.2;
+          if (adjustedWidth / aspectWidth > arbitraryThreshold) { 
             const exceeded = adjustedWidth - aspectWidth;
             adjustedLeft += exceeded / 2;
+
+            adjustedWidth = aspectWidth;
           }
+
+          // 캔버스 크기 설정 (스크린샷 이미지 크기에 맞게 캔버스를 설정)
+          canvas.width = adjustedWidth;
+          canvas.height = adjustedHeight;
 
           // 캡처한 이미지에서 iframe 위치에 해당하는 부분만 캔버스에 그리기
           ctx.drawImage(
