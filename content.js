@@ -100,14 +100,20 @@ window.addEventListener("message", function(event) {
           // console.log(`조정된 iframe 위치: ${adjustedLeft}, ${adjustedTop}`);
 
           const aspectWidth = videoAspectRatio * adjustedHeight;
+          const aspectHeight = adjustedWidth / videoAspectRatio;
           // 너무 크면 양 옆 자르기
-          // console.log(adjustedWidth, adjustedHeight, videoAspectRatio, aspectWidth)
+          // console.log(adjustedWidth, adjustedHeight, videoAspectRatio, aspectWidth, aspectHeight)
           const arbitraryThreshold = 1.2;
           if (adjustedWidth / aspectWidth > arbitraryThreshold) { 
             const exceeded = adjustedWidth - aspectWidth;
             adjustedLeft += exceeded / 2;
 
             adjustedWidth = aspectWidth;
+          } else if (adjustedHeight / aspectHeight > arbitraryThreshold) {
+            const exceeded = adjustedHeight - aspectHeight;
+            adjustedTop += exceeded / 2;
+
+            adjustedHeight = aspectHeight;
           }
 
           // 캔버스 크기 설정 (스크린샷 이미지 크기에 맞게 캔버스를 설정)
