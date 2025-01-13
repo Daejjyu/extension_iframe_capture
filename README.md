@@ -8,7 +8,15 @@ captureVisibleTab는 viewport 전체 화면 자체를 물리적(?)으로 캡쳐�
 캡쳐 후 iframe의 Pos, Size를 계산하여 이미지를 잘라서 클립보드에 복사
 
 ## 단축키
+
+chrome://extensions/shortcuts
+
+등록 필요
+
 Ctrl + Shift + S
+
+![image](https://github.com/user-attachments/assets/8204cede-7fa8-4eba-9a34-42f210a82630)
+
 
 ## How to use - GPT
 크롬 익스텐션을 로컬에서 테스트하는 방법을 단계별로 안내해 드리겠습니다.
